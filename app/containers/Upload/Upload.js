@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
-import { isEmpty, includes, isNaN } from 'lodash';
+import { isEmpty, isNaN } from 'lodash';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';

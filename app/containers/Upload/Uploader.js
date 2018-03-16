@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, instanceOf } from 'prop-types';
+import { func } from 'prop-types';
 import Dropzone from 'react-dropzone';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';

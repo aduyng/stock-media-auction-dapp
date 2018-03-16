@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, bool } from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import LeftSidebar from '../LeftSidebar';
 import Nav from '../Nav';
 import Upload from '../Upload';
