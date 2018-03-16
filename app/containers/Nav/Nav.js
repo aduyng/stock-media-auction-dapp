@@ -5,8 +5,8 @@ import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import CircularProgress from 'material-ui/CircularProgress';
-import Account from '../Account';
 import { yellow100 } from 'material-ui/styles/colors';
+import Account from '../Account';
 
 import './styles/Nav.scss';
 
