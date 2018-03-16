@@ -17,7 +17,7 @@ open http://localhost:8080/#/home
 NOTE: This is a work-in-progress repo!
 
 # Links:
-* [Built](./build/index.html)
+* [Built](./build/#/home)
 
 # Build Performance
 * [Analyzer](./performance/analyzer.html)
