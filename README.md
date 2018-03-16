@@ -15,3 +15,10 @@ open http://localhost:8080/#/home
 ```
 
 NOTE: This is a work-in-progress repo!
+
+# Links:
+* [Built](./build/index.html)
+
+# Build Performance
+* [Analyzer](./performance/analyzer.html)
+* [Stats](./performance/analyzer.html)
