@@ -7,12 +7,19 @@ cache:
   - node_modules
 node_js:
   - "8"
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: master
 before_install:
   #- sudo apt-get -qq update
   #- curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
   #- sudo apt-get install -y nodejs
-before_script:
-  - npm install
+# before_script:
+  # - npm install --verbose
 script:
   - npm run lint
   - npm run build -- --mode=production --env.buildNumber=$TRAVIS_BUILD_NUMBER --env.version=$VERSION --env.commit=`git rev-parse --short HEAD` --env.withAnalyzer=true

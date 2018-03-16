@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const _ = require('lodash');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (argv) => {
   const plugins = [];
@@ -27,6 +26,7 @@ module.exports = (argv) => {
   })));
 
   if (argv.env.withAnalyzer === 'true') {
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; //eslint-disable-line
     plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: '../performance/analyzer.html',
