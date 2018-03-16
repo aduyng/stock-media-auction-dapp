@@ -1,0 +1,8 @@
+{
+  "name": "stock-media-aution-dapp",
+  "title": "Stock Media Auction Dapp",
+  "description": "Auction Platform for Stock Media (images, audios, video, etc.)",
+  "mode": "development",
+  "ipfsHost": "localhost",
+  "ipfsPort": "5001"
+}
