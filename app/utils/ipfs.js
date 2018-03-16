@@ -4,8 +4,7 @@ let connection;
 
 export default () => {
   if (!connection) {
-    // connection = ipfsApi(process.env.ipfsHost, process.env.ipfsPort);
-    connection = ipfsAPI('localhost', '5001');
+    connection = ipfsAPI(process.env.ipfsHost, process.env.ipfsPort);
   }
 
   return connection;
