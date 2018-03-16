@@ -1,38 +1,21 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
-import { isEmpty, first } from 'lodash';
-import Dropzone from 'react-dropzone';
-import Paper from 'material-ui/Paper';
+import { isEmpty, includes, isNaN } from 'lodash';
+import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import FileUpload from 'material-ui/svg-icons/file/file-upload';
+import FlatButton from 'material-ui/FlatButton';
+import ContentSave from 'material-ui/svg-icons/content/save';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Uploader from './Uploader';
 
 const containerStyle = {
-  width: '100%',
-};
-
-const paperStyle = {
-  height: '10rem',
-  width: '100%',
-  margin: 20,
   padding: 20,
-  textAlign: 'center',
-  display: 'inline-block',
-};
-
-const dropzoneStyle = {
-  width: '100%',
-};
-
-const uploadButtonStyle = {
-  margin: 'auto',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
 };
 
 export default class Upload extends Component {
   static propTypes = {
-    uploadFile: func.isRequired,
+    save: func.isRequired,
+    goBack: func.isRequired,
   };
 
   constructor(props) {
@@ -40,36 +23,107 @@ export default class Upload extends Component {
     this.state = {};
   }
 
-  onDrop = (files) => {
+  onFileChange = ({ file }) => this.setState({ file })
+
+  onSaveClick = () => {
+    if (this.state.isValid) {
+      return this.props.save({
+        title: this.state.title,
+        description: this.state.description,
+        startingPrice: this.state.startingPrice,
+        file: this.state.file,
+      });
+    }
+
+    return false;
+  }
+
+  onTitleChange = (event, title) => {
     this.setState({
-      files,
+      title,
+      titleError: isEmpty(title) ? 'The title is required' : undefined,
+      isValid: this.isValid(),
     });
   }
 
-  onUploadClick = () => this.props.uploadFile({ file: first(this.state.files) })
+  onDescriptionChange = (event, description) => {
+    this.setState({
+      description,
+      descriptionError: isEmpty(description) ? 'The description is required' : undefined,
+      isValid: this.isValid(),
+    });
+  }
+
+  onStartingPriceChange = (event, newValue) => {
+    const price = parseFloat(newValue);
+
+    this.setState({
+      startingPrice: price,
+      startingPriceError: (isNaN(price) || price <= 0) ? 'The price is invalid' : undefined,
+      isValid: this.isValid(),
+    });
+  }
+
+  isValid = () => !isEmpty(this.state.title) &&
+    !isEmpty(this.state.description) &&
+    this.state.startingPrice > 0 &&
+    !isEmpty(this.state.file)
+
+  renderUploaderOrUploadedImage() {
+    return (
+      <Uploader onChange={this.onFileChange} />
+    );
+  }
 
   render() {
     return (
       <div className="Upload" style={containerStyle}>
-        <Paper style={paperStyle} zDepth={2} rounded={false}>
-          <Dropzone
-            multiple={false}
-            style={dropzoneStyle}
-            accept="image/jpeg, image/png"
-            onDrop={this.onDrop}
-          >
-            <p>Drag and drop your file here, or click to select a file to upload.</p>
-            <p>Only *.jpeg or *.png images will be accepted.</p>
-          </Dropzone>
-        </Paper>
+        {this.renderUploaderOrUploadedImage()}
 
-        <RaisedButton
-          label="Upload"
-          style={uploadButtonStyle}
-          icon={<FileUpload />}
-          disabled={isEmpty(this.state.files)}
-          onClick={this.onUploadClick}
+        <TextField
+          hintText="Enter a catchy title for your photo"
+          floatingLabelText="Title (*)"
+          fullWidth
+          onChange={this.onTitleChange}
+          errorText={this.state.titleError}
         />
+
+        <TextField
+          hintText="Additional details about the photo"
+          floatingLabelText="Description (*)"
+          fullWidth
+          multiLine
+          rows={2}
+          rowsMax={5}
+          onChange={this.onDescriptionChange}
+          errorText={this.state.descriptionError}
+        />
+
+        <TextField
+          hintText="Enter the starting price for bidding"
+          floatingLabelText="Starting Price (*)"
+          fullWidth
+          type="number"
+          onChange={this.onStartingPriceChange}
+          errorText={this.state.startingPriceError}
+        />
+
+        <div>
+          <RaisedButton
+            label="Save"
+            primary
+            icon={<ContentSave />}
+            onClick={this.onSaveClick}
+            disabled={!this.state.isValid}
+          />
+
+          <FlatButton
+            style={{ marginLeft: 12 }}
+            label="Cancel"
+            icon={<NavigationClose />}
+            onClick={this.props.goBack}
+          />
+        </div>
       </div>
     );
   }

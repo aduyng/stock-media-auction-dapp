@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { func, bool } from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import LeftSidebar from '../LeftSidebar';
 import Nav from '../Nav';
 import Upload from '../Upload';
+import Home from '../Home';
 import Web3WarningDialog from './Web3WarningDialog';
-import SellFloatingActionButton from './SellFloatingActionButton';
 import { WEB3_PROVIDER_IS_NOT_AVAILABLE } from '../../actions/consts';
 import './styles/App.scss';
 
@@ -48,7 +48,7 @@ export default class App extends Component {
       <div>
         <Nav />
         <LeftSidebar />
-        <SellFloatingActionButton href="#/upload" />
+        <Route path="/home" component={Home} />
         <Route path="/upload" component={Upload} />
       </div>
     );

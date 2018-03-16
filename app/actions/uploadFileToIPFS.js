@@ -1,5 +1,7 @@
 import B from 'bluebird';
-// import ipfs from '../utils/ipfs';
+import { first, extend, pick } from 'lodash';
+import ipfs from '../utils/ipfs';
+import { UPLOAD_FILE_SUCCESS, UPLOAD_FILE_ERROR } from './consts';
 
 const readFile = ({ file }) => new B((resolve) => {
   const reader = new FileReader();
@@ -9,8 +11,27 @@ const readFile = ({ file }) => new B((resolve) => {
 
 export default ({ file }) => async (dispatch) => {
   const { buffer } = await readFile({ file });
-  console.log('TODO: add file to IPFS here', buffer);
-  // const response = ipfs().add(buffer);
-  //
-  // console.log(response);
+  const fileToDispatch = {
+    name: file.name,
+    type: file.type,
+  };
+
+  try {
+    const response = await ipfs().add(buffer);
+    return dispatch({
+      type: UPLOAD_FILE_SUCCESS,
+      payload: {
+        file: extend({
+          buffer,
+        }, fileToDispatch, pick(first(response), 'hash', 'path', 'size')),
+      },
+    });
+  } catch (error) {
+    return dispatch({
+      type: UPLOAD_FILE_ERROR,
+      payload: {
+        file: fileToDispatch,
+      },
+    });
+  }
 };
