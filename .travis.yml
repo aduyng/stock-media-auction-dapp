@@ -13,4 +13,6 @@ before_install:
   #- sudo apt-get install -y nodejs
 before_script:
   - npm install
-script: npm run lint
+script:
+  - npm run lint
+  - npm run build -- --mode=production --buildNumber=$TRAVIS_BUILD_NUMBER --version=$VERSION --commit=${TRAVIS_COMMIT: -7}
