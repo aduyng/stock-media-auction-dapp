@@ -7,6 +7,13 @@ cache:
   - node_modules
 node_js:
   - "8"
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: master
 before_install:
   #- sudo apt-get -qq update
   #- curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
