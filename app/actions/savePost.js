@@ -23,7 +23,8 @@ export default ({
     };
 
     try {
-      const response = await ipfs().add(buffer);
+      const ipfsInstance = await ipfs();
+      const response = await ipfsInstance.add(buffer);
       payload.file = extend({
         isUploaded: true,
       }, payload.file, pick(first(response), 'hash', 'path', 'size'));

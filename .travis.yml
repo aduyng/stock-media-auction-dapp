@@ -15,4 +15,4 @@ before_script:
   - npm install
 script:
   - npm run lint
-  - npm run build -- --mode=production --env.buildNumber=$TRAVIS_BUILD_NUMBER --env.version=$VERSION --env.commit=`git rev-parse --short HEAD`
+  - npm run build -- --mode=production --env.buildNumber=$TRAVIS_BUILD_NUMBER --env.version=$VERSION --env.commit=`git rev-parse --short HEAD` --env.withAnalyzer=true

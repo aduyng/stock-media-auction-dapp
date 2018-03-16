@@ -1,10 +1,9 @@
-const ipfsAPI = require('ipfs-api');
-
 let connection;
 
-export default () => {
+export default async () => {
   if (!connection) {
-    connection = ipfsAPI(process.env.ipfsHost, process.env.ipfsPort);
+    connection = await import(/* webpackChunkName: "./js/ipfs" */ 'ipfs-api')
+      .then(ipfsAPI => ipfsAPI(process.env.ipfsHost, process.env.ipfsPort));
   }
 
   return connection;
