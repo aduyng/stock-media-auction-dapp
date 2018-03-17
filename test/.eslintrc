@@ -1,0 +1,15 @@
+{
+  "env": {
+      "mocha": true,
+      "jest": true,
+      "jasmine": true
+  },
+  "globals": {
+    "artifacts": true,
+    "contract": true,
+    "assert": true
+  },
+  "rules": {
+      "no-unused-expressions": 0
+  }
+}
